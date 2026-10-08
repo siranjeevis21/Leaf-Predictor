@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mulberry Leaf Classifier - Safely Logged Out">
+  <title>Logged Out - Mulberry Leaf Classifier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Auto redirect to /auth after 5 seconds -->
+  <meta http-equiv="refresh" content="5;url=/auth">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <div class="hero-wrapper">
+
+    <!-- Floating leaves background -->
+    <div class="leaf-container" aria-hidden="true">
+      <svg class="floating-leaf" viewBox="0 0 24 24"><path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.07,18.5C9.57,17.96 13,16 16,11C19,6 20,3 20,3C20,3 18.6,5.1 17,8M15.96,9.96C13.77,12.83 10.97,14.33 8.61,14.86L13.11,10.36L11.7,8.95L7.14,13.5C8.09,12 9.5,9.9 12.09,8.09L10.68,6.68C8.47,8.22 7.14,10 6.27,11.23L4.97,10L3.55,11.41L5,12.83C4.57,13.9 4.14,15.1 3.79,16.4L2.03,17.38L2.73,19.16L4.31,18.29C4.19,18.9 4.1,19.5 4,20L17,8Z"/></svg>
+      <svg class="floating-leaf" viewBox="0 0 24 24"><path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.07,18.5C9.57,17.96 13,16 16,11C19,6 20,3 20,3C20,3 18.6,5.1 17,8M15.96,9.96C13.77,12.83 10.97,14.33 8.61,14.86L13.11,10.36L11.7,8.95L7.14,13.5C8.09,12 9.5,9.9 12.09,8.09L10.68,6.68C8.47,8.22 7.14,10 6.27,11.23L4.97,10L3.55,11.41L5,12.83C4.57,13.9 4.14,15.1 3.79,16.4L2.03,17.38L2.73,19.16L4.31,18.29C4.19,18.9 4.1,19.5 4,20L17,8Z"/></svg>
+    </div>
+
+    <!-- Navigation Header -->
+    <header>
+      <a href="/auth" class="logo-group">
+        <svg class="logo-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.07,18.5C9.57,17.96 13,16 16,11C19,6 20,3 20,3C20,3 18.6,5.1 17,8M15.96,9.96C13.77,12.83 10.97,14.33 8.61,14.86L13.11,10.36L11.7,8.95L7.14,13.5C8.09,12 9.5,9.9 12.09,8.09L10.68,6.68C8.47,8.22 7.14,10 6.27,11.23L4.97,10L3.55,11.41L5,12.83C4.57,13.9 4.14,15.1 3.79,16.4L2.03,17.38L2.73,19.16L4.31,18.29C4.19,18.9 4.1,19.5 4,20L17,8Z"/>
+        </svg>
+        <span class="logo-text">Mulberry<span>AI</span></span>
+      </a>
+    </header>
+
+    <!-- Main Content -->
+    <main class="full-width-container" style="display: flex; justify-content: center; align-items: center;">
+      <div class="auth-card logged-out-card">
+
+        <!-- Rotating leaf icon -->
+        <svg class="logged-out-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.07,18.5C9.57,17.96 13,16 16,11C19,6 20,3 20,3C20,3 18.6,5.1 17,8M15.96,9.96C13.77,12.83 10.97,14.33 8.61,14.86L13.11,10.36L11.7,8.95L7.14,13.5C8.09,12 9.5,9.9 12.09,8.09L10.68,6.68C8.47,8.22 7.14,10 6.27,11.23L4.97,10L3.55,11.41L5,12.83C4.57,13.9 4.14,15.1 3.79,16.4L2.03,17.38L2.73,19.16L4.31,18.29C4.19,18.9 4.1,19.5 4,20L17,8Z"/>
+        </svg>
+
+        <h1 class="auth-title">Goodbye!</h1>
+        <p class="auth-subtitle" style="margin-bottom: 1.5rem;">You have successfully signed out of your MulberryAI profile.</p>
+
+        <!-- Redirect countdown text -->
+        <p class="redirect-timer">
+          Redirecting back to the login screen in <span id="countdown" style="font-weight: 700; color: var(--gold-accent);">5</span> seconds...
+        </p>
+
+        <a href="/auth" class="action-btn btn-secondary" style="padding: 0.5rem 1.2rem; font-size: 0.85rem; margin-top: 0.5rem;">
+          Go Now
+        </a>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2026 MulberryAI. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <!-- Countdown script -->
+  <script>
+    let secondsLeft = 5;
+    const countdownEl = document.getElementById('countdown');
+    const interval = setInterval(() => {
+      secondsLeft--;
+      if (secondsLeft <= 0) {
+        clearInterval(interval);
+      } else {
+        countdownEl.textContent = secondsLeft;
+      }
+    }, 1000);
+  </script>
+
+</body>
+</html>

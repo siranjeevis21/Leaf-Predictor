@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mulberry Leaf Variety Classifier. Instantly identify mulberry tree types and varieties (ChiangMai60, RedKing, WhiteKing, Buriram60, and more) using advanced deep learning CNN.">
+  <meta name="keywords" content="Mulberry classification, Mulberry Leaf variety, Keras, TensorFlow, Google OAuth, Leaf Identification">
+  <meta name="author" content="Mulberry Classifier App">
+
+  <title>Mulberry Identification - Leaf Variety Classifier</title>
+
+  <!-- Preconnecting Google Fonts for optimal performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <!-- Root background wrapper with hero image & overlays -->
+  <div class="hero-wrapper">
+
+    <!-- Floating leaves container for background atmosphere -->
+    <div class="leaf-container" aria-hidden="true">
+      <!-- Leaf 1 -->
+      <svg class="floating-leaf" viewBox="0 0 24 24">
+        <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.07,18.5C9.57,17.96 13,16 16,11C19,6 20,3 20,3C20,3 18.6,5.1 17,8M15.96,9.96C13.77,12.83 10.97,14.33 8.61,14.86L13.11,10.36L11.7,8.95L7.14,13.5C8.09,12 9.5,9.9 12.09,8.09L10.68,6.68C8.47,8.22 7.14,10 6.27,11.23L4.97,10L3.55,11.41L5,12.83C4.57,13.9 4.14,15.1 3.79,16.4L2.03,17.38L2.73,19.16L4.31,18.29C4.19,18.9 4.1,19.5 4,20L17,8Z"/>
+      </svg>
+      <!-- Leaf 2 -->
+      <svg class="floating-leaf" viewBox="0 0 24 24">
+        <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.07,18.5C9.57,17.96 13,16 16,11C19,6 20,3 20,3C20,3 18.6,5.1 17,8M15.96,9.96C13.77,12.83 10.97,14.33 8.61,14.86L13.11,10.36L11.7,8.95L7.14,13.5C8.09,12 9.5,9.9 12.09,8.09L10.68,6.68C8.47,8.22 7.14,10 6.27,11.23L4.97,10L3.55,11.41L5,12.83C4.57,13.9 4.14,15.1 3.79,16.4L2.03,17.38L2.73,19.16L4.31,18.29C4.19,18.9 4.1,19.5 4,20L17,8Z"/>
+      </svg>
+      <!-- Leaf 3 -->
+      <svg class="floating-leaf" viewBox="0 0 24 24">
+        <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.07,18.5C9.57,17.96 13,16 16,11C19,6 20,3 20,3C20,3 18.6,5.1 17,8M15.96,9.96C13.77,12.83 10.97,14.33 8.61,14.86L13.11,10.36L11.7,8.95L7.14,13.5C8.09,12 9.5,9.9 12.09,8.09L10.68,6.68C8.47,8.22 7.14,10 6.27,11.23L4.97,10L3.55,11.41L5,12.83C4.57,13.9 4.14,15.1 3.79,16.4L2.03,17.38L2.73,19.16L4.31,18.29C4.19,18.9 4.1,19.5 4,20L17,8Z"/>
+      </svg>
+      <!-- Leaf 4 -->
+      <svg class="floating-leaf" viewBox="0 0 24 24">
+        <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.07,18.5C9.57,17.96 13,16 16,11C19,6 20,3 20,3C20,3 18.6,5.1 17,8M15.96,9.96C13.77,12.83 10.97,14.33 8.61,14.86L13.11,10.36L11.7,8.95L7.14,13.5C8.09,12 9.5,9.9 12.09,8.09L10.68,6.68C8.47,8.22 7.14,10 6.27,11.23L4.97,10L3.55,11.41L5,12.83C4.57,13.9 4.14,15.1 3.79,16.4L2.03,17.38L2.73,19.16L4.31,18.29C4.19,18.9 4.1,19.5 4,20L17,8Z"/>
+      </svg>
+    </div>
+
+    <!-- Header Section -->
+    <header>
+      <a href="#" class="logo-group" id="logo-link">
+        <svg class="logo-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.07,18.5C9.57,17.96 13,16 16,11C19,6 20,3 20,3C20,3 18.6,5.1 17,8M15.96,9.96C13.77,12.83 10.97,14.33 8.61,14.86L13.11,10.36L11.7,8.95L7.14,13.5C8.09,12 9.5,9.9 12.09,8.09L10.68,6.68C8.47,8.22 7.14,10 6.27,11.23L4.97,10L3.55,11.41L5,12.83C4.57,13.9 4.14,15.1 3.79,16.4L2.03,17.38L2.73,19.16L4.31,18.29C4.19,18.9 4.1,19.5 4,20L17,8Z"/>
+        </svg>
+        <span class="logo-text">Mulberry<span>AI</span></span>
+      </a>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container" id="main-content">
+
+      <!-- Hero Information Column -->
+      <section class="hero-content">
+        <div class="tagline-badge">
+          <!-- Small badge leaf icon -->
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.07,18.5C9.57,17.96 13,16 16,11C19,6 20,3 20,3C20,3 18.6,5.1 17,8Z"/>
+          </svg>
+          Deep Learning Technology
+        </div>
+
+        <h1 class="hero-title">Identify Mulberry Varieties <span>Instantly</span></h1>
+
+        <p class="hero-description">
+          Leverage a state-of-the-art Convolutional Neural Network (CNN) trained to classify 10 distinct mulberry cultivars. Upload a leaf picture to receive immediate results, complete with confidence scores.
+        </p>
+
+        <!-- Dynamic Features List -->
+        <div class="features-grid">
+
+          <!-- Feature 1: CNN Accuracy -->
+          <div class="feature-item">
+            <div class="feature-icon-wrapper">
+              <!-- AI Mind / Leaf Icon -->
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12,3c-4.97,0-9,4.03-9,9c0,2.12,0.74,4.07,1.97,5.61L4.35,19.4c-0.39,0.39-0.39,1.02,0,1.41s1.02,0.39,1.41,0l1.9-1.9C9.04,19.58,10.47,20,12,20c4.97,0,9-4.03,9-9S16.97,3,12,3z M12,18c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S15.31,18,12,18z"/>
+              </svg>
+            </div>
+            <div class="feature-text-group">
+              <span class="feature-title">CNN Image Recognition</span>
+              <span class="feature-desc">Deep classification trained on hundreds of high-quality leaf samples.</span>
+            </div>
+          </div>
+
+          <!-- Feature 2: History tracking -->
+          <div class="feature-item">
+            <div class="feature-icon-wrapper">
+              <!-- Folder/History Icon -->
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M13,3c-4.97,0-9,4.03-9,9H1l3.89,3.89l0.07,0.14L9,12H6c0-3.87,3.13-7,7-7s7,3.13,7,7s-3.13,7-7,7c-1.93,0-3.68-0.79-4.94-2.06l-1.42,1.42C8.27,19.99,10.51,21,13,21c4.97,0,9-4.03,9-9S17.97,3,13,3z M12,8v5l4.28,2.54l0.72-1.21L13.5,12.5V8H12z"/>
+              </svg>
+            </div>
+            <div class="feature-text-group">
+              <span class="feature-title">Historical Log</span>
+              <span class="feature-desc">Keep track of your identified leaves and review them at any time.</span>
+            </div>
+          </div>
+
+          <!-- Feature 3: Google Login -->
+          <div class="feature-item">
+            <div class="feature-icon-wrapper">
+              <!-- Secure / Lock Icon -->
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12,1L3,5v6c0,5.55,3.84,10.74,9,12c5.16-1.26,9-6.45,9-12V5L12,1z M12,11.99h7c-0.53,4.12-3.28,7.79-7,8.94V12H5V6.3l7-3.11V11.99z"/>
+              </svg>
+            </div>
+            <div class="feature-text-group">
+              <span class="feature-title">Secure Authentication</span>
+              <span class="feature-desc">Safely authenticate through your Google account using standard OAuth protocols.</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Authenticator Card Column -->
+      <section class="auth-card-container">
+        <div class="auth-card">
+          <div class="auth-card-header">
+            <!-- Pulsing Center Leaf Icon -->
+            <svg class="auth-card-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.07,18.5C9.57,17.96 13,16 16,11C19,6 20,3 20,3C20,3 18.6,5.1 17,8M15.96,9.96C13.77,12.83 10.97,14.33 8.61,14.86L13.11,10.36L11.7,8.95L7.14,13.5C8.09,12 9.5,9.9 12.09,8.09L10.68,6.68C8.47,8.22 7.14,10 6.27,11.23L4.97,10L3.55,11.41L5,12.83C4.57,13.9 4.14,15.1 3.79,16.4L2.03,17.38L2.73,19.16L4.31,18.29C4.19,18.9 4.1,19.5 4,20L17,8Z"/>
+            </svg>
+            <h2 class="auth-title">Welcome</h2>
+            <p class="auth-subtitle">Log in to classify leaves and view your prediction history.</p>
+          </div>
+
+          <!-- Google Redirect Button -->
+          <a id="google-login-btn" href="/login" class="google-login-btn">
+            <!-- SVG Google Icon -->
+            <svg class="google-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="#EA4335" d="M12.24,10.285V14.4h6.887c-0.648,2.41-2.519,4.02-5.136,4.02c-3.41,0-6.175-2.766-6.175-6.175s2.766-6.175,6.175-6.175c1.551,0,2.946,0.575,4.023,1.524l3.111-3.11C19.062,1.69,15.86,0.6,12.24,0.6C5.922,0.6,0.8,5.722,0.8,12.04s5.122,11.44,11.44,11.44c6.126,0,11.127-4.4,11.127-11.44c0-0.638-0.057-1.254-0.163-1.755H12.24z"/>
+              <path fill="#4285F4" d="M22.912,12c0-0.755-0.063-1.285-0.163-1.755H12.24V14.4h6.887c-0.288,1.488-1.137,2.753-2.4,3.585l3.703,2.871C22.6,18.89,22.912,15.75,22.912,12z"/>
+              <path fill="#FBBC05" d="M5.865,12.04c0-0.793,0.134-1.554,0.373-2.264L2.535,6.905C1.43,9.01,0.8,11.4,0.8,12.04s0.63,3.03,1.735,5.135l3.703-2.871C6,13.594,5.865,12.833,5.865,12.04z"/>
+              <path fill="#34A853" d="M12.24,23.48c3.62,0,6.65-1.2,8.87-3.265l-3.703-2.871c-1.026,0.687-2.342,1.096-3.875,1.096c-3.41,0-6.175-2.766-6.175-6.175c0-0.34,0.033-0.671,0.089-0.995l-3.703-2.871C2.535,17.175,5.865,23.48,12.24,23.48z"/>
+            </svg>
+            Sign in with Google
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2026 MulberryAI. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#" class="footer-link">Privacy Policy</a>
+        <a href="#" class="footer-link">Terms of Service</a>
+        <a href="#" class="footer-link">Contact Support</a>
+      </div>
+    </footer>
+
+  </div>
+
+</body>
+</html>

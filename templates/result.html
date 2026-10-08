@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mulberry Leaf Classification Result. Instant CNN variety identification results.">
+  <title>Prediction Results - Mulberry Leaf Classifier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <div class="hero-wrapper">
+
+    <!-- Floating leaves background -->
+    <div class="leaf-container" aria-hidden="true">
+      <svg class="floating-leaf" viewBox="0 0 24 24"><path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.07,18.5C9.57,17.96 13,16 16,11C19,6 20,3 20,3C20,3 18.6,5.1 17,8M15.96,9.96C13.77,12.83 10.97,14.33 8.61,14.86L13.11,10.36L11.7,8.95L7.14,13.5C8.09,12 9.5,9.9 12.09,8.09L10.68,6.68C8.47,8.22 7.14,10 6.27,11.23L4.97,10L3.55,11.41L5,12.83C4.57,13.9 4.14,15.1 3.79,16.4L2.03,17.38L2.73,19.16L4.31,18.29C4.19,18.9 4.1,19.5 4,20L17,8Z"/></svg>
+      <svg class="floating-leaf" viewBox="0 0 24 24"><path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.07,18.5C9.57,17.96 13,16 16,11C19,6 20,3 20,3C20,3 18.6,5.1 17,8M15.96,9.96C13.77,12.83 10.97,14.33 8.61,14.86L13.11,10.36L11.7,8.95L7.14,13.5C8.09,12 9.5,9.9 12.09,8.09L10.68,6.68C8.47,8.22 7.14,10 6.27,11.23L4.97,10L3.55,11.41L5,12.83C4.57,13.9 4.14,15.1 3.79,16.4L2.03,17.38L2.73,19.16L4.31,18.29C4.19,18.9 4.1,19.5 4,20L17,8Z"/></svg>
+    </div>
+
+    <!-- Navigation Header -->
+    <header>
+      <a href="/" class="logo-group">
+        <svg class="logo-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.07,18.5C9.57,17.96 13,16 16,11C19,6 20,3 20,3C20,3 18.6,5.1 17,8M15.96,9.96C13.77,12.83 10.97,14.33 8.61,14.86L13.11,10.36L11.7,8.95L7.14,13.5C8.09,12 9.5,9.9 12.09,8.09L10.68,6.68C8.47,8.22 7.14,10 6.27,11.23L4.97,10L3.55,11.41L5,12.83C4.57,13.9 4.14,15.1 3.79,16.4L2.03,17.38L2.73,19.16L4.31,18.29C4.19,18.9 4.1,19.5 4,20L17,8Z"/>
+        </svg>
+        <span class="logo-text">Mulberry<span>AI</span></span>
+      </a>
+
+      <div class="nav-menu">
+        <a href="/" class="nav-link active">Classifier</a>
+        <a href="/history" class="nav-link">History</a>
+        {% if session.get('user') %}
+        <div class="user-profile-btn">
+          <img class="user-avatar" src="{{ session['user']['picture'] }}" alt="User Profile Image">
+          <span class="user-name">{{ session['user']['name'] }}</span>
+          <a href="/logout" class="nav-link" style="padding: 0; font-size: 0.8rem; color: var(--gold-accent);">Logout</a>
+        </div>
+        {% endif %}
+      </div>
+    </header>
+
+    <!-- Main Results Container -->
+    <main class="full-width-container">
+      <div class="dashboard-card">
+
+        <div class="dashboard-header">
+          <h1 class="dashboard-title">Analysis Completed</h1>
+          <p class="dashboard-desc">Here are the classification details computed by the neural network model.</p>
+        </div>
+
+        <div class="result-card-layout">
+
+          <!-- Image Column -->
+          <div class="result-image-box">
+            <!-- Loading image path from predict output -->
+            <img class="result-image" src="{{ image_path }}" alt="Analyzed Leaf Image">
+          </div>
+
+          <!-- Predictions Detail Column -->
+          <div class="result-info-box">
+
+            <div class="result-badge">Detected Variety</div>
+
+            <!-- Predicted Class Name -->
+            <h2 class="result-class-name">{{ prediction }}</h2>
+
+            <!-- Progress confidence meter -->
+            <div class="confidence-container">
+              <div class="confidence-header">
+                <span>Confidence Rating</span>
+                <span class="score-badge">{{ confidence }}%</span>
+              </div>
+              <div class="confidence-bar-bg">
+                <div class="confidence-bar-fill" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <!-- Page actions -->
+            <div class="result-actions">
+              <a href="/" class="action-btn btn-primary">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style="margin-right: 0.25rem;">
+                  <path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/>
+                </svg>
+                New Analysis
+              </a>
+              <a href="/history" class="action-btn btn-secondary">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style="margin-right: 0.25rem;">
+                  <path d="M13,3c-4.97,0-9,4.03-9,9H1l3.89,3.89l0.07,0.14L9,12H6c0-3.87,3.13-7,7-7s7,3.13,7,7s-3.13,7-7,7c-1.93,0-3.68-0.79-4.94-2.06l-1.42,1.42C8.27,19.99,10.51,21,13,21c4.97,0,9-4.03,9-9S17.97,3,13,3z"/>
+                </svg>
+                View History Log
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2026 MulberryAI. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#" class="footer-link">Privacy Policy</a>
+        <a href="#" class="footer-link">Terms of Service</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Trigger animation for the confidence indicator -->
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const fillBar = document.querySelector('.confidence-bar-fill');
+        fillBar.style.width = "{{ confidence }}%";
+      }, 300);
+    });
+  </script>
+
+</body>
+</html>
